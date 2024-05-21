@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="script.js"></script>
+</head>
+<body>
+        <main>
+            <div name="content" class="big bold bright">Content 1</div>
+            <div class="big bold" id="companyName">Content 2</div>
+            <div name="content" class="big">Content 3</div>
+            <div id="ulDiv">
+            </div>
+          </main>
+
+          <script>
+        const companyName = myFunctions.getCompanyName();
+        document.getElementById("companyName").innerHTML = companyName;
+        const companyNameList = document.querySelector("#companyName");
+        companyNameList.innerHTML = "HELLO";
+        const boldNodes = document.getElementsByClassName("bold");
+
+        const boldNodesQuerySelected = document.querySelectorAll(".bold");
+for (let i = 0; i < boldNodes.length; i++) {
+  boldNodes[i].innerHTML += " ... and bold selected with query";
+}
+addListInMain(6);
+removeDiv("companyName")
+    </script>  
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        const createList = (results, element) => {
+            
+            for(let i = 0; i < results.length; i++) {
+                const user = results[i];
+                const box = document.createElement("div");
+
+                const title = createTitleElement(user);
+                const imgSrc = createImageElement(user);
+
+                box.appendChild(title);
+                box.appendChild(imgSrc);
+
+                element.appendChild(box);
+            }
+        }
+
+        function createTitleElement(user) {
+            const title = document.createElement('h2');
+            title.textContent = `${user.name.first} ${user.name.last}`;
+            return title;
+        }
+
+        function createImageElement(user) {
+            const imgSrc = document.createElement('img');
+            imgSrc.src = user.picture.thumbnail;
+            return imgSrc;
+        }
+
+        const getUsers = (element) => {
+            fetch("https://randomuser.me/api/?gender=female&results=30")
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data)
+                return data;
+            })
+            .then((data) => {
+                createList(data.results, element);
+            })
+        }
+        
+        let allUsers = [];  // This will store all fetched users
+
+document.addEventListener("DOMContentLoaded", () => {
+    const inputElement = document.createElement('input');
+    inputElement.type = 'text';
+    inputElement.id = 'searchInput';
+
+    const buttonElement = document.createElement('button');
+    buttonElement.textContent = 'Search';
+    buttonElement.id = 'btnSearch';
+
+    const mainElement = document.querySelector('main');
+    document.body.insertBefore(inputElement, mainElement);
+    document.body.insertBefore(buttonElement, mainElement);
+
+    fetch("https://randomuser.me/api/?gender=female&results=30")
+        .then(response => response.json())
+        .then(data => {
+            allUsers = data.results;
+            createList(allUsers, mainElement);
+        });
+
+    document.getElementById('btnSearch').addEventListener('click', () => {
+        const searchValue = document.getElementById('searchInput').value;
+        mainElement.innerHTML = '';  // Clear current list
+        const filteredResults = allUsers.filter(user => 
+            user.name.first.toLowerCase().includes(searchValue.toLowerCase()) || 
+            user.name.last.toLowerCase().includes(searchValue.toLowerCase())
+        );
+        createList(filteredResults, mainElement);
+    });
+});
+    </script>
+</head>
+<body>
+    <main>
+
+    </main>
+</body>
+</html>
